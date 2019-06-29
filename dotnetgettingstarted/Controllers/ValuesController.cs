@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using dotnetgettingstarted.Models;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace dotnetgettingstarted.Controller
+namespace dotnetgettingstarted.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : ControllerBase
@@ -22,13 +23,17 @@ namespace dotnetgettingstarted.Controller
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return $"value {id}";
+            return "value";
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]ValueModel value)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidOperationException("Invalid model");
+            }
         }
 
         // PUT api/values/5
