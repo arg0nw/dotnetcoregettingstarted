@@ -21,19 +21,21 @@ namespace dotnetgettingstarted.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            return Ok(new ValueModel { id = id, value = "Get works" });
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]ValueModel value)
+        public IActionResult Post([FromBody]ValueModel value)
         {
             if (!ModelState.IsValid)
             {
-                throw new InvalidOperationException("Invalid model");
+                return BadRequest(ModelState);
             }
+
+            return CreatedAtAction("Get", new { id = value.id, value = value.value});
         }
 
         // PUT api/values/5
